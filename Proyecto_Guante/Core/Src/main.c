@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "string.h"
+#include "stdio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -99,7 +100,10 @@ static void MX_ETH_Init(void);
 PUTCHAR_PROTOTYPE {
         while (HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 10) != HAL_OK) {};
  return ch;
-}
+};
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -138,8 +142,16 @@ int main(void)
   MX_ETH_Init();
   /* USER CODE BEGIN 2 */
 
-  printf("Soy franchesco\r\n");
-  BNO055_Init_I2C(&hi2c1);
+
+
+  bno = (bno055_t){
+         .i2c = &hi2c1, .addr = BNO_ADDR, .mode = BNO_MODE_IMU, ._temp_unit = 0,
+     };
+
+  bno055_init(&bno);
+
+  bno055_vec3_t gyroscope;
+  bno055_vec3_t accelerometer;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -149,6 +161,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  // Read Gyroscope data on all axis
+	  bno055_vec4_t qua;
+	  bno055_quaternion(&bno, &qua);
+	  // OR
+	  //bno.quaternion(&bno, &qua);
+	  printf("%2.2f | %2.2f | %2.2f | %2.2f\n", qua.w, qua.x, qua.y, qua.z);
   }
   /* USER CODE END 3 */
 }
