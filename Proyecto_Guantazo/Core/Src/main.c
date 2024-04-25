@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "string.h"
-#include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -133,7 +132,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_ETH_Init();
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   ITM_Port32(31) = 2;
@@ -162,7 +160,12 @@ int main(void)
 	  x = v.x;
 	  y = v.y;
 	  z = v.z;
-	  printf("%.6f,%.6f,%.6f,%.6f\r\n", v.w, v.x, v.y, v.z);
+	  // Colocacion del sensor --> Las letras se leen del derecho
+	  // Tipo 0 --> Mano boca arriba horizontal (dame dinero)
+	  // Tipo 1 --> Mano saludando estático
+
+	  printf("%.6f,%.6f,%.6f,%.6f,0\r\n", v.w, v.x, v.y, v.z);
+
 	  HAL_Delay(500);
 
   }
@@ -427,6 +430,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USB_OverCurrent_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : USB_SOF_Pin USB_ID_Pin USB_DM_Pin USB_DP_Pin */
+  GPIO_InitStruct.Pin = USB_SOF_Pin|USB_ID_Pin|USB_DM_Pin|USB_DP_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : USB_VBUS_Pin */
+  GPIO_InitStruct.Pin = USB_VBUS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(USB_VBUS_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

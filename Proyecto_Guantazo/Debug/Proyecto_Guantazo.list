@@ -1348,7 +1348,7 @@ int main(void)
  8000cb0:	eef7 7bc7 	vcvt.f32.f64	s15, d7
  8000cb4:	4b14      	ldr	r3, [pc, #80]	@ (8000d08 <main+0x100>)
  8000cb6:	edc3 7a00 	vstr	s15, [r3]
-	  printf("%.6f,%.6f,%.6f,%.6f\r\n", v.w, v.x, v.y, v.z);
+	  printf("%.6f,%.6f,%.6f,%.6f,\r\n", v.w, v.x, v.y, v.z);
  8000cba:	e9d7 8900 	ldrd	r8, r9, [r7]
  8000cbe:	e9d7 2302 	ldrd	r2, r3, [r7, #8]
  8000cc2:	e9d7 0104 	ldrd	r0, r1, [r7, #16]
