@@ -1663,11 +1663,11 @@ int main(void)
     LL_USART_EnableIT_ERROR(USART3);
  8000e40:	4849      	ldr	r0, [pc, #292]	@ (8000f68 <main+0x188>)
  8000e42:	f7ff fe41 	bl	8000ac8 <LL_USART_EnableIT_ERROR>
+  while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
  8000e46:	2180      	movs	r1, #128	@ 0x80
  8000e48:	4848      	ldr	r0, [pc, #288]	@ (8000f6c <main+0x18c>)
@@ -1707,10 +1707,9 @@ int main(void)
  8000eac:	edc3 7a00 	vstr	s15, [r3]
 	  //printf("W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
 
-
 	  // W,X,Y,Z,Tipo
-	  int tipo = 0;
- 8000eb0:	2300      	movs	r3, #0
+	  int tipo = 1;
+ 8000eb0:	2301      	movs	r3, #1
  8000eb2:	623b      	str	r3, [r7, #32]
 
 	  if(cont < 500){

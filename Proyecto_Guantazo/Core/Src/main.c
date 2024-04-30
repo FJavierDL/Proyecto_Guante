@@ -177,9 +177,9 @@ int main(void)
 	  //printf("W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
 
 	  // W,X,Y,Z,Tipo
-	  int tipo = 0;
+	  int tipo = 1;
 
-	  if(cont < 500){
+	  if(cont < 501){
 		  snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
 		  ubSizeToSend = strlen((char *)aStringToSend);
 
