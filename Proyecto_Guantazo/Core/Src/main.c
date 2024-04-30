@@ -167,23 +167,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  snprintf((char *)aStringToSend, sizeof(aStringToSend), "W: %.6f, X: %.6f, Y: %.6f, Z: %.6f\r\n", w, x, y, z);
-	  	  ubSizeToSend = strlen((char *)aStringToSend);
-
-	  /*
-	  	  xPrueba = v.x;
-	  	  snprintf((char *)aStringToSend, sizeof(aStringToSend), "X: %.6f, Contador: %d\r\n", xPrueba, cont);
-	  	  ubSizeToSend = strlen((char *)aStringToSend);
-
-
-	  	  // Enviar el mensaje byte por byte
-	  	  for (uint8_t i = 0; i < ubSizeToSend; i++)
-	  	  {
-	  		LL_USART_TransmitData8(USART3,  aStringToSend[i]);
-	  		while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
-	  	  }*/
-
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	  HAL_Delay(100);
 	  bno055_vector_t v = bno055_getVectorQuaternion();
@@ -194,22 +177,19 @@ int main(void)
 	  //printf("W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
 
 
+	if(cont < 500) {
+		int tipo = 1;
+		snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
+		ubSizeToSend = strlen((char *)aStringToSend);
 
-	  snprintf((char *)aStringToSend, sizeof(aStringToSend), "W: %.6f, X: %.6f, Y: %.6f, Z: %.6f\r\n", w, x, y, z);
-	  ubSizeToSend = strlen((char *)aStringToSend);
-
-	  /*
-		  xPrueba = v.x;
-		  snprintf((char *)aStringToSend, sizeof(aStringToSend), "X: %.6f, Contador: %d\r\n", xPrueba, cont);
-		  ubSizeToSend = strlen((char *)aStringToSend);
-	   */
-
-	  // Enviar el mensaje byte por byte
-	  for (uint8_t i = 0; i < ubSizeToSend; i++){
+		// Enviar el mensaje byte por byte
+		for (uint8_t i = 0; i < ubSizeToSend; i++){
 		LL_USART_TransmitData8(USART3,  aStringToSend[i]);
 		 while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
-	  }
-	 HAL_Delay(400);
+		}
+		cont++;
+		HAL_Delay(50);
+  	  }
   }
   /* USER CODE END 3 */
 }
