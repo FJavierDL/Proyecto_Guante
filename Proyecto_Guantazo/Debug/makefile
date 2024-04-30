@@ -60,8 +60,8 @@ all: main-build
 main-build: Proyecto_Guantazo.elf secondary-outputs
 
 # Tool invocations
-Proyecto_Guantazo.elf Proyecto_Guantazo.map: $(OBJS) $(USER_OBJS) C:\Users\raul_\Desktop\por\ si\ acaso\vUELTA\ ATRAS\Proyecto_Guante-216d3a242e371ec5e4c39a6cf9711a2b384758e0\Proyecto_Guantazo\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Proyecto_Guantazo.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\raul_\Desktop\por si acaso\vUELTA ATRAS\Proyecto_Guante-216d3a242e371ec5e4c39a6cf9711a2b384758e0\Proyecto_Guantazo\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Proyecto_Guantazo.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Proyecto_Guantazo.elf Proyecto_Guantazo.map: $(OBJS) $(USER_OBJS) C:\Users\fraja\Desktop\SAC\Github\Proyecto_Guante\Proyecto_Guante\Proyecto_Guantazo\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Proyecto_Guantazo.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\fraja\Desktop\SAC\Github\Proyecto_Guante\Proyecto_Guante\Proyecto_Guantazo\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Proyecto_Guantazo.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

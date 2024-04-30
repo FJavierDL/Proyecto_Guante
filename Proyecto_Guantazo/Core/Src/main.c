@@ -103,7 +103,7 @@ float w = 0.;
 float x = 0.;
 float y = 0.;
 float z = 0.;
-
+int cont = 0;
 
 /* USER CODE END 0 */
 
@@ -176,20 +176,22 @@ int main(void)
 	  z = v.z;
 	  //printf("W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
 
+	  // W,X,Y,Z,Tipo
+	  int tipo = 0;
 
-	if(cont < 500) {
-		int tipo = 1;
-		snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
-		ubSizeToSend = strlen((char *)aStringToSend);
+	  if(cont < 500){
+		  snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
+		  ubSizeToSend = strlen((char *)aStringToSend);
 
-		// Enviar el mensaje byte por byte
-		for (uint8_t i = 0; i < ubSizeToSend; i++){
-		LL_USART_TransmitData8(USART3,  aStringToSend[i]);
-		 while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
-		}
-		cont++;
-		HAL_Delay(50);
-  	  }
+		  // Enviar el mensaje byte por byte
+		  for (uint8_t i = 0; i < ubSizeToSend; i++){
+			LL_USART_TransmitData8(USART3,  aStringToSend[i]);
+			 while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
+		  }
+
+		  cont++;
+		  HAL_Delay(50);
+	  }
   }
   /* USER CODE END 3 */
 }
