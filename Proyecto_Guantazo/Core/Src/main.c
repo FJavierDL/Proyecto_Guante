@@ -167,8 +167,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	  HAL_Delay(100);
+	  //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  //HAL_Delay(100);
 	  bno055_vector_t v = bno055_getVectorQuaternion();
 	  w = v.w;
 	  x = v.x;
@@ -179,7 +179,7 @@ int main(void)
 	  // W,X,Y,Z,Tipo
 	  int tipo = 1;
 
-	  if(cont < 501){
+	  if(cont < 2001){
 		  snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
 		  ubSizeToSend = strlen((char *)aStringToSend);
 
@@ -190,8 +190,9 @@ int main(void)
 		  }
 
 		  cont++;
-		  HAL_Delay(50);
+
 	  }
+	  HAL_Delay(40);
   }
   /* USER CODE END 3 */
 }
