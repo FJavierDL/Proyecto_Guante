@@ -104,6 +104,7 @@ float x = 0.;
 float y = 0.;
 float z = 0.;
 int cont = 0;
+int tipoFuncionamiento = 0;
 
 /* USER CODE END 0 */
 
@@ -170,20 +171,20 @@ int main(void)
 		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		//HAL_Delay(100);
 
-
-		//Si el valor es 0, entra en modo entrenamiento, si el valor es 1, entra en modo ejecucion
-		tipoFuncionamiento = 0;
 		bno055_vector_t v = bno055_getVectorQuaternion();
 		w = v.w;
 		x = v.x;
 		y = v.y;
 		z = v.z;
-		//printf("W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
 
-		// W,X,Y,Z,Tipo
-		int tipo = 1;
-		if(tipoFuncionamiento ==0){
+		//Si el valor es 0, entra en modo entrenamiento, si el valor es 1, entra en modo ejecucion
+		tipoFuncionamiento = 1;
+
+		if(tipoFuncionamiento == 0){
 			if(cont < 2001){
+				// W,X,Y,Z,Tipo
+				int tipo = 1;
+
 				snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
 				ubSizeToSend = strlen((char *)aStringToSend);
 
@@ -192,12 +193,10 @@ int main(void)
 					LL_USART_TransmitData8(USART3,  aStringToSend[i]);
 					while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
 				}
-
 				cont++;
-
 			}
 		}else{
-			snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%d\r\n", w, x, y, z, tipo);
+			snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f\r\n", w, x, y, z);
 			ubSizeToSend = strlen((char *)aStringToSend);
 
 			// Enviar el mensaje byte por byte
@@ -205,8 +204,6 @@ int main(void)
 				LL_USART_TransmitData8(USART3,  aStringToSend[i]);
 				while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
 			}
-
-			cont++;
 		}
 		HAL_Delay(40);
 	}
