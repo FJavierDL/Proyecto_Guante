@@ -5,12 +5,15 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 from PIL import Image, ImageTk
 import time
+import serial
 
 
 import conex_puerto_serie
 import prediccion_modelo
 
-global puerto_serie, datos, posicion
+puerto_serie = None
+posicion=0
+datos=[[0,0,0,0]]
 
 def inicializa():
     puerto_serie = conex_puerto_serie.config_puerto_serie()
@@ -35,12 +38,12 @@ def usa_modelo():
 
 
 # Función para actualizar los datos del gráfico, cuadro de texto y la imagen
-def actualizar_datos(i):
+def actualizar_datos():
     # Agregar un nuevo valor a la lista
     nuevo_valor = datos
-    x.append(nuevo_valor[0][0])
-    y.append(nuevo_valor[0][1])
-    z.append(nuevo_valor[0][2])
+    x.append(nuevo_valor[0][1])
+    y.append(nuevo_valor[0][2])
+    z.append(nuevo_valor[0][3])
 
     # Limitar la lista de valores para mostrar solo los últimos 10
     if len(nuevo_valor) > 20:
@@ -48,9 +51,9 @@ def actualizar_datos(i):
 
     # Limpiar el gráfico y volver a graficar los datos actualizados
     ax.clear()
-    ax.plot(range(len(x)), x, marker='x')
-    ax.plot(range(len(y)), y, marker='y')
-    ax.plot(range(len(z)), z, marker='z')
+    ax.plot(range(len(x)), x, marker='o')
+    ax.plot(range(len(y)), y, marker='o')
+    ax.plot(range(len(z)), z, marker='o')
     ax.set_title('Gráfico en Tiempo Real')
     ax.set_xlabel('Muestras')
     ax.set_ylabel('Valor')
