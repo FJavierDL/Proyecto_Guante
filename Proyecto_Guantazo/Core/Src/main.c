@@ -196,7 +196,7 @@ int main(void)
 				cont++;
 			}
 		}else{
-			snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f\r\n", w, x, y, z);
+			snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f\r\n ", w, x, y, z);
 			ubSizeToSend = strlen((char *)aStringToSend);
 
 			// Enviar el mensaje byte por byte
@@ -205,7 +205,7 @@ int main(void)
 				while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
 			}
 		}
-		HAL_Delay(40);
+		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
 }

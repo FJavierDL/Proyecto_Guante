@@ -33,9 +33,9 @@ def actualizar_datos(i):
 
     # Actualizar la imagen según el valor
     if nuevo_valor > 5:
-        img_path = "img1.jpg"  # Ruta de la imagen si el valor es mayor que 5
+        img_path = 'Fotos\\img1.jpg'  # Ruta de la imagen si el valor es mayor que 5
     else:
-        img_path = "img2.jpg"  # Ruta de la imagen si el valor es menor o igual que 5
+        img_path = 'Fotos\\img2.jpg'  # Ruta de la imagen si el valor es menor o igual que 5
 
     img = Image.open(img_path)
     img = img.resize((200, 200))
@@ -65,7 +65,7 @@ texto_label = tk.Label(root, textvariable=texto_actualizado)
 texto_label.pack()
 
 # Agregar una imagen inicial
-img_path = "img1.jpg"  # Ruta de la imagen inicial
+img_path = 'Fotos\\img1.jpg'  # Ruta de la imagen inicial
 img = Image.open(img_path)
 img = img.resize((200, 200))
 photo = ImageTk.PhotoImage(img)
