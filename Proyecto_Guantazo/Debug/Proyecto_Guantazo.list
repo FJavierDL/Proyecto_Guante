@@ -43,13 +43,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  19 .debug_line   00016a15  00000000  00000000  00052b12  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_str    00109501  00000000  00000000  00069527  2**0
+ 20 .debug_str    001094fd  00000000  00000000  00069527  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .comment      00000043  00000000  00000000  00172a28  2**0
+ 21 .comment      00000043  00000000  00000000  00172a24  2**0
                   CONTENTS, READONLY
- 22 .debug_frame  000063b4  00000000  00000000  00172a6c  2**2
+ 22 .debug_frame  000063b4  00000000  00000000  00172a68  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 23 .debug_line_str 00000086  00000000  00000000  00178e20  2**0
+ 23 .debug_line_str 00000082  00000000  00000000  00178e1c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1748,9 +1748,9 @@ int main(void)
  8000f18:	edc3 7a00 	vstr	s15, [r3]
 
 		//Si el valor es 0, entra en modo entrenamiento, si el valor es 1, entra en modo ejecucion
-		tipoFuncionamiento = 0;
+		tipoFuncionamiento = 1;
  8000f1c:	4b7b      	ldr	r3, [pc, #492]	@ (800110c <main+0x32c>)
- 8000f1e:	2200      	movs	r2, #0
+ 8000f1e:	2201      	movs	r2, #1
  8000f20:	601a      	str	r2, [r3, #0]
 
 		if(tipoFuncionamiento == 0){
@@ -1930,12 +1930,11 @@ int main(void)
  80010d0:	d3e5      	bcc.n	800109e <main+0x2be>
 			}
 		}
-		HAL_Delay(50);
- 80010d2:	2032      	movs	r0, #50	@ 0x32
- 80010d4:	f000 ff8a 	bl	8001fec <HAL_Delay>
+		HAL_Delay(500);
+ 80010d2:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
+ 80010d6:	f000 ff89 	bl	8001fec <HAL_Delay>
 	{
- 80010d8:	e6be      	b.n	8000e58 <main+0x78>
- 80010da:	bf00      	nop
+ 80010da:	e6bd      	b.n	8000e58 <main+0x78>
  80010dc:	e000007c 	.word	0xe000007c
  80010e0:	2000047c 	.word	0x2000047c
  80010e4:	20000428 	.word	0x20000428

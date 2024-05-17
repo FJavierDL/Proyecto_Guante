@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 class SerialReaderApp:
     def __init__(self, master):
         self.master = master
-        master.title("Serial Reader")
+        master.title("Proyecto Guantazo")
         master.geometry("1200x500")
         self.create_variables()
         self.create_text_boxes()
@@ -16,17 +16,22 @@ class SerialReaderApp:
         self.load_model()
 
     def create_variables(self):
-        self.w = tk.DoubleVar()
-        self.x = tk.DoubleVar()
-        self.y = tk.DoubleVar()
-        self.z = tk.DoubleVar()
+        self.w1 = tk.DoubleVar()
+        self.x1 = tk.DoubleVar()
+        self.y1 = tk.DoubleVar()
+        self.z1 = tk.DoubleVar()
+        self.w2 = tk.DoubleVar()
+        self.x2 = tk.DoubleVar()
+        self.y2 = tk.DoubleVar()
+        self.z2 = tk.DoubleVar()
         self.prediction = tk.StringVar()
         self.max_position = tk.StringVar()
         self.read_count = 0
 
     def create_text_boxes(self):
-        text_boxes = [("W:", self.w, 0), ("X:", self.x, 1), ("Y:", self.y, 2), ("Z:", self.z, 3), 
-                    ("Predicción:", self.prediction, 4), ("Posición del máximo:", self.max_position, 5)]
+        text_boxes = [("W1:", self.w1, 0), ("X1:", self.x1, 1), ("Y1:", self.y1, 2), ("Z1:", self.z1, 3), 
+                    ("W2:", self.w2, 4), ("X2:", self.x2, 5), ("Y2:", self.y2, 6), ("Z2:", self.z2, 7),
+                    ("Predicción:", self.prediction, 8), ("Posición del máximo:", self.max_position, 9)]
         for text, variable, row in text_boxes:
             label = tk.Label(self.master, text=text)
             label.pack(side="left", padx=(20, 10), pady=10)
@@ -57,7 +62,7 @@ class SerialReaderApp:
 
     def load_model(self):
         try:
-            self.model = load_model("modelo_3_precision_99,906_porc_sigmoid_2_neuronas_intermedia.h5")
+            self.model = load_model("modelo_7_precision_98,9487_4_gestos.h5")
         except Exception as e:
             messagebox.showerror("Error", f"Error al cargar el modelo: {e}")
             self.model = None
@@ -94,13 +99,20 @@ class SerialReaderApp:
             messagebox.showinfo("Información", "El puerto serie no está conectado")
 
     def process_data(self, data):
-        if len(data) == 4:
-            self.w.set(float(data[0]))
-            self.x.set(float(data[1]))
-            self.y.set(float(data[2]))
-            self.z.set(float(data[3]))
+        print(len(data))
+        if len(data) == 8:
+            self.w1.set(float(data[0]))
+            self.x1.set(float(data[1]))
+            self.y1.set(float(data[2]))
+            self.z1.set(float(data[3]))
+            self.w2.set(float(data[4]))
+            self.x2.set(float(data[5]))
+            self.y2.set(float(data[6]))
+            self.z2.set(float(data[7]))
             if self.model:
-                prediction = self.model.predict([[float(data[0]), float(data[1]), float(data[2]), float(data[3])]], verbose=0)
+                prediction = self.model.predict([[float(data[0]), float(data[1]), float(data[2]), float(data[3]),
+                                                float(data[4]), float(data[5]), float(data[6]), float(data[7])]], verbose=0)
+                print(prediction)
                 self.prediction.set(str(prediction))
                 max_position = prediction.argmax()
                 self.max_position.set(str(max_position))
@@ -117,6 +129,8 @@ class SerialReaderApp:
 
 def main():
     root = tk.Tk()
+    # icono = tk.PhotoImage(file="Fotos/foto mano ventana.avif")
+    # root.iconphoto(True, icono)
     app = SerialReaderApp(root)
     root.mainloop()
 

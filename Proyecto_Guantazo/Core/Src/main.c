@@ -204,7 +204,7 @@ int main(void)
 		z2 = v2.z;
 
 		//Si el valor es 0, entra en modo entrenamiento, si el valor es 1, entra en modo ejecucion
-		tipoFuncionamiento = 0;
+		tipoFuncionamiento = 1;
 
 		if(tipoFuncionamiento == 0){
 			if(cont < 2001){
@@ -233,7 +233,7 @@ int main(void)
 				while (!LL_USART_IsActiveFlag_TXE(USART3)) {} // Esperar a que se complete la transmisión del byte actual
 			}
 		}
-		HAL_Delay(50);
+		HAL_Delay(500);
 	}
   /* USER CODE END 3 */
 }
