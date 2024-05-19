@@ -10,21 +10,21 @@ def load_model(model_path):
 def main():
     ser = serial.Serial('COM5', 115200)
     
-    model_path = "modelo_3_precision_99,906_porc_sigmoid_2_neuronas_intermedia.h5"
+    model_path = "modelo_11_precision_100_4_gestos.h5"
     model = load_model(model_path)
     
     try:
-        for _ in range(400):
+        for _ in range(30):
             line = ser.readline().decode().strip()
             
-            if line and len(line.split(',')) == 4:
-                w, x, y, z = map(float, line.split(','))
-                data = np.array([[w, x, y, z]])
+            if line and len(line.split(',')) == 8:
+                w1, x1, y1, z1, w2, x2, y2, z2 = map(float, line.split(','))
+                data = np.array([[w1, x1, y1, z1, w2, x2, y2, z2]])
                 
                 prediction = model.predict(data, verbose=0)
                 
                 max_index = np.argmax(prediction)
-                print(w, ",", x, ",", y, ",", z, "-->", prediction, " --> Gesto:", max_index)
+                print(f"{w1}, {x1}, {y1}, {z1}, {w2}, {x2}, {y2}, {z2}\nPrediccion: {prediction}\nGesto: {max_index}\n\n")
             else:
                 print("La línea está vacía o no tiene 4 datos.")
             

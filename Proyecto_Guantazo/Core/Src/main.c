@@ -119,6 +119,8 @@ float z2 = 0.;
 int cont = 0;
 int tipoFuncionamiento = 0;
 
+bno055_vector_t v1;
+
 /* USER CODE END 0 */
 
 /**
@@ -160,11 +162,11 @@ int main(void)
 
 	ITM_Port32(31) = 2;
 
-	bno055_assignI2C(&hi2c2);
+	bno055_assignI2C(&hi2c1);
 	bno055_setup();
 	bno055_setOperationModeNDOF();
 
-	bno055_assignI2C(&hi2c1);
+	bno055_assignI2C(&hi2c2);
 	bno055_setup();
 	bno055_setOperationModeNDOF();
 
@@ -188,28 +190,30 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		//HAL_Delay(100);
+
+
 		bno055_assignI2C(&hi2c1);
-		bno055_vector_t v1 = bno055_getVectorQuaternion();
+		v1 = bno055_getVectorQuaternion();
 		w1 = v1.w;
 		x1 = v1.x;
 		y1 = v1.y;
 		z1 = v1.z;
 
-
 		bno055_assignI2C(&hi2c2);
-		bno055_vector_t v2 = bno055_getVectorQuaternion();
-		w2 = v2.w;
-		x2 = v2.x;
-		y2 = v2.y;
-		z2 = v2.z;
+		v1 = bno055_getVectorQuaternion();
+		w2 = v1.w;
+		x2 = v1.x;
+		y2 = v1.y;
+		z2 = v1.z;
+
 
 		//Si el valor es 0, entra en modo entrenamiento, si el valor es 1, entra en modo ejecucion
 		tipoFuncionamiento = 1;
 
 		if(tipoFuncionamiento == 0){
 			if(cont < 2001){
-				// W1,X1,Y1,Z1,W2,X2,Y2,Z2Tipo
-				int tipo = 0;
+				// W1,X1,Y1,Z1,W2,X2,Y2,Z2,Tipo
+				int tipo = 2;
 
 				snprintf((char *)aStringToSend, sizeof(aStringToSend), "%.8f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f,%d\r\n",
 						w1, x1, y1, z1, w2, x2, y2, z2, tipo);
