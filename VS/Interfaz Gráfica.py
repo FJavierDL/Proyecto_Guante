@@ -143,8 +143,9 @@ class Interfaz:
             self.y2.set(float(data[6]))
             self.z2.set(float(data[7]))
             if self.model:
-                prediction = self.model.predict([[float(data[0]), float(data[1]), float(data[2]), float(data[3]),
-                                                  float(data[4]), float(data[5]), float(data[6]), float(data[7])]], verbose=0)
+                input_data = np.array([[float(data[0]), float(data[1]), float(data[2]), float(data[3]),
+                                        float(data[4]), float(data[5]), float(data[6]), float(data[7])]])
+                prediction = self.model.predict(input_data, verbose=0)
                 pred = [np.round(valor * 100, 2) for valor in prediction[0]]
                 self.prediction.set(str(pred))
                 max_position = prediction.argmax()
@@ -158,5 +159,5 @@ def main():
     app = Interfaz(root)
     root.mainloop()
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     main()
